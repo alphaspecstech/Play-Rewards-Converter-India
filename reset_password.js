@@ -1,43 +1,59 @@
-document.getElementById('resetPasswordForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    const resetForm = document.getElementById('reset-password-form');
+    const resetMessage = document.getElementById('reset-message');
 
-    const newPassword = document.getElementById('newPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-    const messageElement = document.getElementById('message');
-
-    if (newPassword !== confirmPassword) {
-        messageElement.textContent = 'Passwords do not match';
-        messageElement.style.color = 'red';
-        return;
+    // Function to parse URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        const results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     }
 
-    if (!isValidPassword(newPassword)) {
-        messageElement.textContent = 'Password must be at least 8 characters long and contain both letters and numbers';
-        messageElement.style.color = 'red';
-        return;
+    // Extract required parameters from URL
+    const mode = getUrlParameter('mode');
+    const oobCode = getUrlParameter('oobCode');
+    const apiKey = getUrlParameter('apiKey');
+    const lang = getUrlParameter('lang');
+
+    // Check if all required parameters are present
+    if (mode === 'resetPassword' && oobCode && apiKey) {
+        // Display message indicating that password reset is in progress
+        resetMessage.textContent = "Resetting password...";
+
+        // Call Firebase Authentication API to reset the password
+        firebase.auth().verifyPasswordResetCode(oobCode)
+            .then(function(email) {
+                // Email verification successful
+                resetForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    const newPassword = document.getElementById('new-password').value;
+                    const confirmPassword = document.getElementById('confirm-password').value;
+
+                    if (newPassword !== confirmPassword) {
+                        resetMessage.textContent = "Passwords do not match!";
+                        return;
+                    }
+
+                    // Reset password using Firebase Authentication API
+                    firebase.auth().confirmPasswordReset(oobCode, newPassword)
+                        .then(function() {
+                            // Password reset successful
+                            resetMessage.textContent = "Password reset successfully!";
+                            resetForm.reset();
+                        })
+                        .catch(function(error) {
+                            // Handle error
+                            resetMessage.textContent = "Error: " + error.message;
+                        });
+                });
+            })
+            .catch(function(error) {
+                // Handle error
+                resetMessage.textContent = "Error: " + error.message;
+            });
+    } else {
+        resetMessage.textContent = "Invalid reset password URL.";
     }
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const oobCode = urlParams.get('oobCode');
-
-    if (!oobCode) {
-        messageElement.textContent = 'Invalid or missing password reset code.';
-        messageElement.style.color = 'red';
-        return;
-    }
-
-    firebase.auth().confirmPasswordReset(oobCode, newPassword)
-        .then(() => {
-            messageElement.textContent = 'Password has been reset successfully!';
-            messageElement.style.color = 'green';
-        })
-        .catch((error) => {
-            messageElement.textContent = error.message;
-            messageElement.style.color = 'red';
-        });
 });
-
-function isValidPassword(password) {
-    const regex = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    return regex.test(password);
-}
