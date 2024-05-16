@@ -13,10 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Extract required parameters from URL
     const mode = getUrlParameter('mode');
     const oobCode = getUrlParameter('oobCode');
-    const apiKey = getUrlParameter('apiKey');
 
     // Check if all required parameters are present
-    if (mode === 'resetPassword' && oobCode && apiKey) {
+    if (mode === 'resetPassword' && oobCode) {
         // Reset password using Firebase Authentication API
         firebase.auth().verifyPasswordResetCode(oobCode)
             .then(function(email) {
