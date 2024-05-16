@@ -14,17 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const mode = getUrlParameter('mode');
     const oobCode = getUrlParameter('oobCode');
     const apiKey = getUrlParameter('apiKey');
-    const lang = getUrlParameter('lang');
 
     // Check if all required parameters are present
     if (mode === 'resetPassword' && oobCode && apiKey) {
-        // Display message indicating that password reset is in progress
-        resetMessage.textContent = "Resetting password...";
-
-        // Call Firebase Authentication API to reset the password
+        // Reset password using Firebase Authentication API
         firebase.auth().verifyPasswordResetCode(oobCode)
             .then(function(email) {
-                // Email verification successful
+                // Display form to reset password
+                resetForm.classList.remove('hidden');
+
                 resetForm.addEventListener('submit', function(event) {
                     event.preventDefault();
 
