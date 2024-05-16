@@ -1,0 +1,158 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+header ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+header ul li {
+    display: inline;
+}
+
+header ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+header ul li a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+#intro {
+    background: url('https://via.placeholder.com/1920x1080.png?text=Background+Image') no-repeat center center/cover;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#intro .intro-content {
+    max-width: 600px;
+}
+
+#intro h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+#intro p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+#intro .btn {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#intro .btn:hover {
+    background-color: #0056b3;
+}
+
+#features, #mockups, #contact {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+#features h2, #mockups h2, #contact h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.feature-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.feature-cards .card {
+    background-color: #f4f4f4;
+    padding: 2rem;
+    margin: 1rem;
+    flex: 1 1 30%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.feature-cards .card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.mockups-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mockups-container .mockup {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.video-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 2rem;
+}
+
+footer p {
+    margin: 0.5rem 0;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.social-media a {
+    margin: 0 0.5rem;
+    display: inline-block;
+}
+
+.social-media img {
+    width: 24px;
+    height: 24px;
+}
